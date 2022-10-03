@@ -121,8 +121,13 @@ def simulate():
     counterweight_length = parameters[4]
     return launch_trebuchet()
 
+'''We will keep on optimizing until we get a distance of over 35m. The optimization algorithm
+would keep on going, but the results just become nonsensical because the differences between
+the simulation and real life build up and our idealizing assumptions (having a point mass for the
+hinged counterweight, no friction, etc) become incredibly untrue.'''
+#parameters are 
 curDist = 0
-while curDist<60:
+while curDist<35: 
     print("\n\n\n---------------------------")
     reinitialize()
     lever_mass = mu*(major+minor)
@@ -139,10 +144,11 @@ while curDist<60:
         derivs[i] = (newDist - curDist)/dv
         print(newDist)
         parameters[i] -= dv
+    if np.max(derivs) > 1000:
+        print("The derivatives are too high, the optimization at this point is nonsense. Try changing the learning rate or restarting with different parameters")
+        break
     print("Derivs: ",derivs)
-    #print("Parameters Before: ", parameters)
     parameters += lr*derivs
-    #print("Updated Parameters:",parameters)
     parameters[0] = max(parameters[0],0.05); parameters[1] = max(parameters[1],0.05)
     
 print("major: {}, minor: {}, theta_0: {}, theta_f: {}, counterweight_length: {}".format(parameters[0],parameters[1],parameters[2],parameters[3],parameters[4]))

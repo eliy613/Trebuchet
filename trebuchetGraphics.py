@@ -10,7 +10,7 @@ ground = 572.5
 pixels_per_meter = 50
 
 payload = 0.5 # kg
-counterweight = 45 # kg
+counterweight = 29 # kg
 major = 1.33 # m
 minor = 0.86 # m
 trebuchet_height = 1.68 # m, 5.5 ft
@@ -21,7 +21,7 @@ counterweight_length = 0.5 # m
 
 fulcrum_x, fulcrum_y = 100, ground - trebuchet_height*pixels_per_meter
 
-t_step = 0.0001 # s
+t_step = 0.0005 # s
 
 payload_x, payload_y = fulcrum_x - major*pixels_per_meter*cos(theta_0), fulcrum_y - major*pixels_per_meter*sin(theta_0)
 
@@ -32,7 +32,7 @@ theta_prime = 0
 phi_prime = 0
 phi = pi/2 + theta_0
 
-using_runge = False #if true, the Runge Kutta method is used to solve the diffeqs, and if not Euler's method is used
+using_runge = True #if true, the Runge Kutta method is used to solve the diffeqs, and if not Euler's method is used
 def x_range(v_0, theta, y_0):
     t = (-v_0*sin(theta) - sqrt(v_0**2 * sin(theta)**2 - 2*g*y_0)) / g
     return v_0*cos(theta)*t
